@@ -1,0 +1,13 @@
+{
+  "name": "fabry-perot-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive study companion to the Fabry-Perot Modes and Stability report",
+  "scripts": {
+    "test": "node tests.js && node tests-ui.js"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.3",
+    "temml": "0.11.3"
+  }
+}

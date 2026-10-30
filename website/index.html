@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fabry–Pérot Interferometer — Modes and Stability | Interactive Companion</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/temml@0.11.3/dist/Temml-Local.css">
+<link rel="stylesheet" href="styles.css">
+<script defer src="https://cdn.jsdelivr.net/npm/temml@0.11.3/dist/temml.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+
+<div class="layout">
+  <nav class="sidebar" aria-label="Sections">
+    <div class="brand">
+      <span class="brand-title">Fabry–Pérot<br>Modes &amp; Stability</span>
+      <span class="brand-sub">interactive companion</span>
+    </div>
+    <ol class="toc">
+      <li><a href="#sec-intro">Overview</a></li>
+      <li><a href="#sec-fpi">1 · Interferometer &amp; cavity</a></li>
+      <li><a href="#sec-mbi">2 · Multi-beam interference</a></li>
+      <li><a href="#sec-resonator">3 · Laser resonator</a></li>
+      <li><a href="#sec-modes">4 · Longitudinal &amp; transverse modes</a></li>
+      <li><a href="#sec-stability">5 · Cavity stability</a></li>
+      <li><a href="#sec-examples">6 · Examples &amp; applications</a></li>
+      <li><a href="#sec-end">7 · Conclusion</a></li>
+      <li><a href="#sec-refs">8 · References</a></li>
+    </ol>
+    <div class="side-actions">
+      <button id="theme-toggle" class="btn" type="button">◐ Theme</button>
+      <button id="tests-run" class="btn" type="button">▶ Run tests</button>
+      <pre id="tests-out" hidden></pre>
+    </div>
+  </nav>
+
+  <main class="content" id="content">
+
+    <header class="masthead panel">
+      <h1>Fabry–Pérot Interferometer: Modes and Stability of the Cavity</h1>
+      <p class="authors">Mohammed Al-Twaity · Husni Naufal Zuhdi · Khalil Assaf</p>
+      <p class="meta">Interactive companion to the Laser Physics report — UJM Le Mans (2026).
+      Every number is computed live in your browser and validated by the physics test suite
+      (<code>node tests.js</code>).</p>
+    </header>
+
+    <section id="sec-intro">
+      <h2>Overview</h2>
+      <p>Two parallel, partially reflecting surfaces facing each other: the <em>Fabry–Pérot
+      interferometer</em> is one of the simplest devices in optics, yet the same geometry underlies
+      high-resolution spectroscopy and almost every laser resonator. This page walks through the
+      physics of the report with live widgets:</p>
+      <ul class="pill-list">
+        <li>Multi-beam interference — the Airy function, FSR and finesse</li>
+        <li>The FP cavity as a laser resonator — threshold and photon lifetime</li>
+        <li>Longitudinal modes, Gaussian and Hermite–Gaussian transverse modes</li>
+        <li>Ray-matrix stability, the (g<sub>1</sub>, g<sub>2</sub>) diagram and cavity beam fitting</li>
+        <li>Worked examples: He–Ne laser, semiconductor diode, confocal scanning interferometer</li>
+      </ul>
+      <div class="note">
+        <strong>Notation.</strong> Mirror power reflectivities R<sub>1</sub>, R<sub>2</sub> (or common
+        R), spacing L (d for an etalon), refractive index n, mirror radii of curvature
+        R<sub>c1</sub>, R<sub>c2</sub> (positive for concave), wavelength λ, order m, free spectral
+        range Δν<sub>FSR</sub>, finesse 𝓕. All quantities in SI units unless shown otherwise.
+        Try <em>Run tests</em> in the sidebar to check the physics functions against the report’s
+        worked numbers — it runs in-page, right here.
+      </div>
+    </section>
+
+    <section id="sec-fpi">
+      <h2>1 · The Fabry–Pérot interferometer and the optical cavity</h2>
+      <p>A Fabry–Pérot interferometer (FPI) is two parallel, partially reflecting surfaces
+      separated by a distance d; coated surfaces form an FP <em>etalon</em> (introduced by Charles
+      Fabry and Alfred Pérot in 1899 as a spectroscopy tool). Light entering the gap is reflected
+      back and forth many times, and a small fraction leaves at every interaction: these many
+      delayed copies of the incident wave interfere with each other.</p>
+      <p>An <em>optical cavity</em> (resonator) is the more general idea: reflecting elements that
+      confine light so it reproduces itself after one round trip. The two-mirror FP cavity is the
+      simplest standing-wave resonator; flat–flat gives the classical etalon, curved mirrors give
+      the spherical-mirror resonator used in most lasers.</p>
+      <div class="svg-wrap">
+        <svg viewBox="0 0 520 150" role="img" aria-label="Etalon schematic with multiple reflected and transmitted beams">
+          <rect x="150" y="20" width="8" height="110" class="plate"></rect>
+          <rect x="330" y="20" width="8" height="110" class="plate"></rect>
+          <line x1="20" y1="80" x2="150" y2="80" class="ray"></line>
+          <polygon points="150,80 140,76 140,84" class="rayfill"></polygon>
+          <line x1="154" y1="80" x2="330" y2="80" class="ray"></line>
+          <line x1="330" y1="80" x2="342" y2="80" class="ray"></line>
+          <line x1="154" y1="80" x2="330" y2="64" class="ray ghost"></line>
+          <line x1="154" y1="64" x2="330" y2="48" class="ray ghost"></line>
+          <line x1="330" y1="48" x2="342" y2="47" class="ray ghost"></line>
+          <line x1="330" y1="64" x2="154" y2="80" class="ray ghost"></line>
+          <line x1="150" y1="80" x2="100" y2="80" class="ray ghost"></line>
+          <line x1="150" y1="64" x2="100" y2="64" class="ray ghost"></line>
+          <text x="120" y="140" class="lbl">d</text>
+          <text x="246" y="14" class="lbl">FP etalon, reflectivity R per surface</text>
+          <text x="352" y="84" class="lbl">transmitted beams</text>
+          <text x="20" y="70" class="lbl">E₀ incident</text>
+        </svg>
+      </div>
+      <p>The same structure plays two roles: <strong>passive</strong> — an external light is analysed
+      or filtered (spectrometer, narrow-band filter, frequency reference); and <strong>active</strong> —
+      a gain medium is inserted and the mirrors provide feedback that turns an amplifier into an
+      oscillator, selecting which frequencies and spatial patterns can oscillate (Schawlow–Townes 1958;
+      Maiman’s 1960 ruby laser used parallel coated crystal faces as its FP cavity).</p>
+    </section>
+
+    <section id="sec-mbi">
+      <h2>2 · Principle of the FP interferometer</h2>
+
+      <h3>2.1 Optical path difference between successive beams</h3>
+      <p>A plane wave hits a plate of thickness d and index n at angle θ (inside the plate, set by
+      Snell’s law n₀ sin θ₀ = n sin θ). Ray 1 emerges at B; ray 2 makes one extra internal round
+      trip B–C–D before emerging. With BC = CD = d/cos θ and BF = 2d·tan θ·sin θ, the two emerge on
+      a common wavefront so that the extra optical path is:</p>
+      <div class="eq" data-eq="opl"></div>
+      <p>and the phase difference between adjacent transmitted beams is</p>
+      <div class="eq" data-eq="delta"></div>
+      <p>where φ is the phase shift accumulated on the two internal reflections. If the coating is
+      non-dispersive, φ merely relabels the order m — the peak spacing, shape and finesse are
+      unchanged — so the geometric phase usually suffices.</p>
+
+      <div class="panel widget">
+        <h4>Widget — beam bouncing in the etalon</h4>
+        <div class="widget-grid">
+          <div><canvas id="canvas-rays" data-h="300"></canvas></div>
+          <div class="controls">
+            <div class="ctl"><label>Internal angle θ</label>
+              <input id="rays-theta" type="range" min="0" max="70" step="1" value="25">
+              <output id="rays-theta-val">25°</output></div>
+            <div class="ctl"><label>Plate index n</label>
+              <input id="rays-n" type="range" min="1.0" max="2.5" step="0.05" value="1.45">
+              <output id="rays-n-val">1.45</output></div>
+            <p class="readout" id="rays-opd"></p>
+          </div>
+        </div>
+        <p class="hint">External angle θ₀ = arcsin(n sin θ) is read back automatically (clamped to
+        real values). The readout shows the OPD 2nd·cos θ in wavelengths for d = 1 µm, λ = 633 nm.</p>
+      </div>
+
+      <h3>2.2 Amplitude and power coefficients</h3>
+      <p>For a lossless interface the Stokes relations are</p>
+      <div class="eq" data-eq="stokes"></div>
+      <p>and the <em>power</em> coefficients are</p>
+      <div class="eq" data-eq="rt"></div>
+      <p>T ≠ t² because the factor n₂cos θ<sub>t</sub>/n₁cos θ<sub>i</sub> accounts for the change of
+      beam cross-section and wave speed at the surface. For rays crossing both faces of a plate the
+      factors cancel, T<sub>front</sub>T<sub>back</sub> = (tt′)² = (1−R)², which is exactly the
+      prefactor appearing below.</p>
+
+      <h3>2.3 Sum of the transmitted beams</h3>
+      <p>Each successive transmitted beam has one extra round trip: attenuation R and phase e<sup>iδ</sup>.
+      Summing the geometric series of all beams:</p>
+      <div class="eq" data-eq="series"></div>
+
+      <h3>2.4 Transmitted irradiance and the Airy function</h3>
+      <p>Taking |E<sub>t</sub>|² and using 1 − cos δ = 2 sin²(δ/2):</p>
+      <div class="eq" data-eq="denom"></div>
+      <div class="eq" data-eq="airy"></div>
+      <p>F is the <em>coefficient of finesse</em>. The prefactor T²/(1−R)² is the peak transmission;
+      for a lossless etalon it equals 1 — every resonant wavelength is fully transmitted. Absorptive
+      or scattering loss A (with T = 1−R−A) lowers the peaks to [1−A/(1−R)]² without changing the shape.</p>
+
+      <h3>2.5 Resonance, free spectral range and finesse</h3>
+      <p>Transmission is maximal when δ = 2πm — the round trip contains an integer number of wavelengths:</p>
+      <div class="eq" data-eq="resonance"></div>
+      <p>The minimum between peaks is [(1−R)/(1+R)]². Adjacent resonances are separated by the free
+      spectral range (FSR):</p>
+      <div class="eq" data-eq="fsr"></div>
+      <p>The peak full-width at half maximum in phase is ≈4/√F, so the finesse is</p>
+      <div class="eq" data-eq="finesse"></div>
+      <p>Finesse depends only on mirror quality; FSR only on spacing. Together they set the
+      chromatic resolving power λ/δλ<sub>min</sub> ≈ m·𝓕 — the effective number of interfering
+      beams, playing the role of slits in a grating:</p>
+      <div class="eq" data-eq="respower"></div>
+      <p class="note">Report example: fused-silica etalon, d = 1 mm, n = 1.45, R = 0.9 →
+      Δν<sub>FSR</sub> ≈ 103 GHz, 𝓕 ≈ 30, peak width ≈ 3.5 GHz, order m ≈ 4.6×10³ at 632.8 nm,
+      resolving power ≈ 1.4×10⁵.</p>
+
+      <div class="panel widget">
+        <h4>Widget — Airy transmission, live</h4>
+        <div class="controls controls-row">
+          <div class="ctl"><label>R</label><input id="airy-R" type="range" min="0.05" max="0.98" step="0.005" value="0.6"><output id="airy-R-val">0.60</output></div>
+          <div class="ctl"><label>Angle θ (inside)</label><input id="airy-theta" type="range" min="0" max="70" step="1" value="0"><output id="airy-theta-val">0°</output></div>
+          <div class="ctl"><label>d (µm)</label><input id="airy-d" type="number" min="0.1" max="50" step="0.1" value="100"></div>
+          <div class="ctl"><label>n</label><input id="airy-n" type="number" min="1" max="4" step="0.01" value="1"></div>
+          <div class="ctl"><label>λ (nm)</label><input id="airy-lambda" type="number" min="300" max="2000" step="0.1" value="632.8"></div>
+        </div>
+        <div id="plot-airy" class="plotbox"></div>
+        <div class="readout" id="airy-readout"></div>
+        <div class="eq live-eq" id="airy-formula"></div>
+      </div>
+
+      <h3>2.6 Resolving power and tuning</h3>
+      <p>The resonance can be tuned by changing d (piezo-scanning), θ (tilting) or n (temperature,
+      gas pressure). Sweeping d while a photodiode records the transmitted power flattens the
+      incident spectrum into peaks repeated every FSR; with a lens, the angular dependence produces
+      the familiar concentric ring pattern, with the highest orders near the centre.</p>
+    </section>
+
+    <section id="sec-resonator">
+      <h2>3 · The FP cavity as a laser resonator</h2>
+      <p>A laser needs a gain medium, a pump, and optical feedback. A single pass amplifies intensity
+      by only e<sup>gℓ</sup>; between two mirrors the light traverses the medium many times, so weak
+      gain can build a strong field. The cavity also selects the frequencies and transverse patterns
+      that oscillate, giving the laser its narrow linewidth and defined beam.</p>
+      <div class="svg-wrap">
+        <svg viewBox="0 0 520 140" role="img" aria-label="Two-mirror laser resonator schematic">
+          <rect x="60" y="30" width="6" height="80" class="mirror"></rect>
+          <path d="M 454 30 A 900 900 0 0 1 454 110" class="mirror"></path>
+          <line x1="66" y1="70" x2="454" y2="70" class="beam"></line>
+          <rect x="210" y="44" width="120" height="52" class="gain"></rect>
+          <text x="270" y="74" class="lbl">gain medium</text>
+          <line x1="462" y1="70" x2="508" y2="70" class="beam"></line>
+          <line x1="260" y1="70" x2="260" y2="118" class="dash"></line>
+          <text x="266" y="132" class="lbl">waist w₀</text>
+          <text x="40" y="20" class="lbl">M₁ (R≈1)</text>
+          <text x="420" y="20" class="lbl">M₂ (output coupler)</text>
+          <line x1="66" y1="126" x2="454" y2="126" class="dim"></line>
+          <text x="255" y="124" class="lbl dimlbl">L</text>
+        </svg>
+      </div>
+
+      <h3>3.1 Threshold condition</h3>
+      <p>Steady oscillation requires the field to reproduce itself in amplitude and phase after one
+      round trip. With intensity gain g, distributed loss α<sub>s</sub> and mirror reflectivities
+      R<sub>1</sub>, R<sub>2</sub>:</p>
+      <div class="eq" data-eq="thr"></div>
+      <p>The mirror-loss term is the price paid for letting light escape through M₂. The photon
+      lifetime and cold-cavity linewidth are</p>
+      <div class="eq" data-eq="tauc"></div>
+      <p>For equal mirrors R → 1 and no other loss, δν<sub>c</sub> coincides with Δν<sub>FSR</sub>/𝓕:
+      the laser cavity is the same FP resonator as the passive interferometer, and finesse is just
+      another way of expressing the cavity loss. The <em>phase</em> condition gives 2nL = qλ — the
+      longitudinal modes of Sec. 4.</p>
+
+      <div class="panel widget">
+        <h4>Widget — threshold calculator</h4>
+        <div class="controls controls-row">
+          <div class="ctl"><label>R₁</label><input id="thr-R1" type="range" min="0.90" max="0.9999" step="0.0001" value="0.995"><output id="thr-R1-val">0.995</output></div>
+          <div class="ctl"><label>R₂</label><input id="thr-R2" type="range" min="0.50" max="0.9999" step="0.0001" value="0.95"><output id="thr-R2-val">0.95</output></div>
+          <div class="ctl"><label>α_s (cm⁻¹)</label><input id="thr-alpha" type="number" min="0" max="5" step="0.005" value="0.005"></div>
+          <div class="ctl"><label>L (cm)</label><input id="thr-L" type="number" min="1" max="100" step="0.1" value="30"></div>
+          <div class="ctl"><label>n</label><input id="thr-n" type="number" min="1" max="4" step="0.01" value="1"></div>
+        </div>
+        <div class="readout" id="thr-out"></div>
+      </div>
+    </section>
+
+    <section id="sec-modes">
+      <h2>4 · Longitudinal modes and transverse modes</h2>
+      <p>A <em>mode</em> is a field distribution that reproduces itself after one round trip. It is
+      labelled TEM<sub>mnq</sub>: index q describes the variation along the axis, m, n across the
+      beam.</p>
+
+      <h3>4.1 Longitudinal modes</h3>
+      <p>Setting the round-trip phase to a multiple of 2π gives standing waves with an integer
+      number of half-wavelengths between the mirrors:</p>
+      <div class="eq" data-eq="longmodes"></div>
+      <p>(In a dispersive medium use the group index n<sub>g</sub> in the spacing.) The spacing is
+      exactly the FSR of the equivalent FP interferometer. The gain medium amplifies a finite band
+      Δν<sub>g</sub>, so the laser oscillates on the modes inside the band whose gain exceeds
+      threshold; approximately N<sub>q</sub> ≈ Δν<sub>g,above-threshold</sub>/Δν<sub>FSR</sub>
+      modes. Shortening the cavity raises the spacing — when the FSR exceeds the gain bandwidth
+      only one longitudinal mode survives.</p>
+
+      <div class="panel widget">
+        <h4>Widget — mode comb under the gain curve</h4>
+        <div class="controls controls-row">
+          <div class="ctl"><label>L (cm)</label><input id="gain-L" type="range" min="5" max="120" step="0.5" value="30"><output id="gain-L-val">30 cm</output></div>
+          <div class="ctl"><label>Δν_g FWHM (GHz)</label><input id="gain-dnu" type="range" min="0.2" max="8" step="0.1" value="1.5"><output id="gain-dnu-val">1.5 GHz</output></div>
+          <div class="ctl"><label>Threshold</label><input id="gain-thr" type="range" min="0.05" max="1" step="0.05" value="0.5"><output id="gain-thr-val">0.50</output></div>
+        </div>
+        <div id="plot-gain" class="plotbox"></div>
+        <div class="readout" id="gain-out"></div>
+      </div>
+
+      <h3>4.2 Transverse modes: derivation from the paraxial wave equation</h3>
+      <p>The longitudinal modes tell us <em>which frequencies</em> fit; the transverse modes describe
+      <em>how the field is distributed across the beam</em>. The report derives them from the
+      paraxial wave equation in six steps — expand each step below.</p>
+
+      <details class="deriv">
+        <summary>Step 1 — Helmholtz equation and the paraxial approximation</summary>
+        <p>A monochromatic wave E(x,y,z,t) = Re[U(x,y,z)e<sup>iωt</sup>], with amplitude U obeying</p>
+        <div class="eq" data-eq="helmholtz"></div>
+        <p>Write U = u(x,y,z)e<sup>−ikz</sup>; substituting and dropping ∂²u/∂z² (paraxial: the envelope
+        varies slowly along z, |u″| ≪ |k u′|) because the beam travels mostly along z:</p>
+        <div class="eq" data-eq="paraxial"></div>
+      </details>
+
+      <details class="deriv">
+        <summary>Step 2 — Complex beam parameter ansatz</summary>
+        <p>Look for a beam that keeps a Gaussian profile while spreading:</p>
+        <div class="eq" data-eq="ansatz"></div>
+        <p>Substituting into the paraxial equation, matching the r² and r-independent terms separately:</p>
+        <div class="eq" data-eq="qeq"></div>
+      </details>
+
+      <details class="deriv">
+        <summary>Step 3 — Solving for q(z): spot size and wavefront curvature</summary>
+        <p>The first equation gives q = z + q₀; a real q₀ would be an unconfined spherical wave, so at
+        the waist (z = 0) take q₀ = i z_R:</p>
+        <div class="eq" data-eq="qz"></div>
+        <p>Identifying −ik r²/(2q) with −r²/w² + phase terms defines the physical parameters:</p>
+        <div class="eq" data-eq="wz"></div>
+        <p>At z = 0 the radius is the waist w₀, which fixes z_R. z_R is the <em>Rayleigh range</em>;
+        at z = ±z_R the area doubles, w = √2·w₀. The wavefront is planar at the waist and takes its
+        minimum curvature radius 2z_R at z = ±z_R. Far-field divergence follows from the asymptote
+        of the envelope: θ_div = λ/(πw₀) — a small waist diverges strongly.</p>
+      </details>
+
+      <details class="deriv">
+        <summary>Step 4 — Amplitude and Gouy phase, ψ(z)</summary>
+        <p>ψ′/ψ = −1/q integrates to ψ = C/q, giving, with ζ(z) = arctan(z/z_R):</p>
+        <div class="eq" data-eq="psi"></div>
+        <p>Assembling e<sup>−ikz</sup>, the Gaussian and ψ gives the fundamental TEM₀₀ beam:</p>
+        <div class="eq" data-eq="u00"></div>
+        <p>The intensity I(r,z) = I₀(w₀/w)² exp(−2r²/w²) falls to 1/e² at r = w (86.5% of the power
+        inside); total power P = I₀πw₀²/2. The extra phase ζ is the <em>Gouy phase</em>, a delay of
+        π through the focus.</p>
+      </details>
+
+      <details class="deriv">
+        <summary>Step 5 — Higher-order solutions: Hermite–Gaussian modes</summary>
+        <p>Seek separable corrections X(x,z)·Y(y,z) multiplying the fundamental beam. The x-equation
+        is solved by X = H_l(ξ)e<sup>ilζ</sup> with ξ = √2·x/w(z), which reduces it to Hermite’s
+        differential equation. Solutions finite for large ξ exist only for integer l:</p>
+        <div class="eq" data-eq="herm"></div>
+        <p>and likewise for y with index m. Each unit of l or m adds one factor e<sup>iζ</sup>, so
+        the Gouy phase is (l+m+1)ζ(z). The complete Hermite–Gaussian mode:</p>
+        <div class="eq" data-eq="hg"></div>
+        <p>w(z) and R(z) are the same as for TEM₀₀, so <em>all</em> transverse modes fit the same
+        mirrors. l and m count nodal lines along x and y; the pattern extent grows ≈ √(l+m+1)·w.
+        In circular symmetric cavities the family becomes Laguerre–Gaussian TEM<sub>pℓ</sub> with
+        l+m → 2p+|ℓ|.</p>
+      </details>
+
+      <details class="deriv">
+        <summary>Step 6 — Fitting the beam to the cavity</summary>
+        <p>The cavity selects the beam whose wavefront curvature matches the mirror surfaces. With
+        the waist at z = 0 and mirrors at z₁ &lt; 0 &lt; z₂ (L = z₂ − z₁), the conditions
+        R(z₁) = −R<sub>c1</sub>, R(z₂) = R<sub>c2</sub> give three equations for z₁, z₂, z_R:</p>
+        <div class="eq" data-eq="match"></div>
+        <p>Equivalently in g-parameters, z<sub>R</sub>² = L²g₁g₂(1−g₁g₂)/(g₁+g₂−2g₁g₂)², real only
+        for 0 &lt; g₁g₂ &lt; 1. Checks: symmetric cavity z_R² = L(2R_c−L)/4; plano-concave has the
+        waist on the flat mirror, z_R² = L(R<sub>c2</sub>−L); confocal z_R = L/2. The procedure:
+        (i) g<sub>1</sub>, g<sub>2</sub> and stability; (ii) z_R, z₁, z₂; (iii) w₀ = √(λz_R/π);
+        (iv) mirror spots w<sub>i</sub> = w₀·√(1 + z<sub>i</sub>²/z<sub>R</sub>²); (v) divergence
+        λ/πw₀; (vi) mode frequencies in Step 7. Try it live in Sec. 5.</p>
+      </details>
+
+      <details class="deriv">
+        <summary>Step 7 — Resonance frequencies of the transverse modes</summary>
+        <p>On-axis phase φ = kz − (l+m+1)ζ(z). Accumulating over a round trip and demanding a 2πq
+        change:</p>
+        <div class="eq" data-eq="transfreq"></div>
+        <p>The longitudinal comb is shifted per transverse order by (Δζ/π)(l+m+1)·ν<sub>F</sub>.
+        With tan Δζ = Lz_R/(z_R² + z₁z₂) the Gouy-phase shift follows from cos²Δζ = g₁g₂:</p>
+        <div class="eq" data-eq="dzeta"></div>
+        <table class="tbl">
+          <caption>Offsets for typical cavities (from the report, Table 3)</caption>
+          <thead><tr><th>Cavity</th><th>g₁g₂</th><th>Δζ/π</th><th>Offset per order</th><th>Consequence</th></tr></thead>
+          <tbody>
+            <tr><td>Plane–plane</td><td>1</td><td>0</td><td>none</td><td>all TEM<sub>lm</sub> degenerate</td></tr>
+            <tr><td>Plano-concave L = 0.3 m, R<sub>c2</sub> = 0.5 m</td><td>0.4</td><td>0.282</td><td>0.282 ν<sub>F</sub></td><td>Δν<sub>T</sub> ≈ 141 MHz</td></tr>
+            <tr><td>Symmetric confocal</td><td>0</td><td>1/2</td><td>ν<sub>F</sub>/2</td><td>even/odd orders interleave, spacing c/4L</td></tr>
+            <tr><td>Concentric</td><td>1 (both g &lt; 0)</td><td>1</td><td>ν<sub>F</sub></td><td>all TEM<sub>lm</sub> degenerate</td></tr>
+          </tbody>
+        </table>
+        <p>Modes with the same N = l+m are (N+1)-fold degenerate; that degeneracy is lifted by
+        astigmatic mirrors or apertures. Only TEM₀₀ usually oscillates: higher-order modes are
+        wider, lose more at the aperture, and are suppressed with an intracavity iris (Fox–Li:
+        a Fresnel number N_F = a²/(λL), small, is an effective mode filter).</p>
+      </details>
+
+      <div class="panel widget">
+        <h4>Widget — TEM<sub>lm</sub> intensity patterns</h4>
+        <div class="widget-grid">
+          <div><canvas id="canvas-hg" data-h="320"></canvas></div>
+          <div class="controls">
+            <div class="ctl"><label>l (nodes, x)</label>
+              <select id="hg-l"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="ctl"><label>m (nodes, y)</label>
+              <select id="hg-m"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="ctl"><label>w (norm. units)</label><input id="hg-w" type="range" min="0.5" max="1.5" step="0.01" value="1"><output id="hg-w-val">1.00</output></div>
+            <div class="chk"><label><input id="hg-nodes" type="checkbox" checked> Show nodal lines</label></div>
+            <p class="readout" id="hg-note"></p>
+          </div>
+        </div>
+        <p class="hint">Pattern = H_l(√2x/w)²·H_m(√2y/w)²·e<sup>−2(x²+y²)/w²</sup>, normalised to its
+        maximum. Bright lobes carry 1/(l+1) lobes per row and nodal lines where the field changes sign.</p>
+      </div>
+    </section>
+
+    <section id="sec-stability">
+      <h2>5 · Cavity configuration and stability</h2>
+
+      <h3>5.1 Ray-matrix derivation</h3>
+      <p>Not every pair of mirrors traps light. One round trip is the product of free-space (L) and
+      reflection-mirror (f = R_c/2) ABCD matrices:</p>
+      <div class="eq" data-eq="raymatrix"></div>
+      <p>Since det M = 1, rays stay bounded only if |A + D|/2 ≤ 1. With the cavity g-parameters</p>
+      <div class="eq" data-eq="gparam"></div>
+      <p>one finds (A + D)/2 = 2g₁g₂ − 1, hence the stability condition</p>
+      <div class="eq" data-eq="stabcond"></div>
+      <p>The same condition emerges from Gaussian optics: a beam fits the cavity only when its
+      wavefronts coincide with the mirrors, R(z<sub>i</sub>) = R<sub>ci</sub>, which has a real
+      solution only for the same range of g₁g₂ (Step 6).</p>
+
+      <h3>5.2 The stability diagram</h3>
+      <p>The stable region lies between the axes and the hyperbola g₁g₂ = 1, in the first and third
+      quadrants. Boundary cavities (plane–plane, hemispherical, confocal, concentric) are
+      <em>marginally stable</em>: a tiny spacing or tilt change decides whether they work.</p>
+      <table class="tbl">
+        <caption>Common two-mirror configurations (report, Table 4)</caption>
+        <thead><tr><th>Configuration</th><th>R<sub>c1</sub></th><th>R<sub>c2</sub></th><th>g₁</th><th>g₂</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Plane–plane (flat FP)</td><td>∞</td><td>∞</td><td>1</td><td>1</td><td>marginal</td></tr>
+          <tr><td>Symmetric confocal</td><td>L</td><td>L</td><td>0</td><td>0</td><td>stable (boundary)</td></tr>
+          <tr><td>Concentric</td><td>L/2</td><td>L/2</td><td>−1</td><td>−1</td><td>marginal</td></tr>
+          <tr><td>Hemispherical</td><td>∞</td><td>L</td><td>1</td><td>0</td><td>stable (boundary)</td></tr>
+          <tr><td>Plano-concave</td><td>∞</td><td>R<sub>c2</sub> &gt; L</td><td>1</td><td>0&lt;g₂&lt;1</td><td>stable</td></tr>
+          <tr><td>Symmetric, R_c &gt; L</td><td>R_c</td><td>R_c</td><td>g</td><td>g</td><td>stable</td></tr>
+          <tr><td>Convex–concave / R_c &lt; L/2</td><td>—</td><td>—</td><td colspan="2">g₁g₂ &lt; 0 or &gt; 1</td><td>unstable</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel widget">
+        <h4>Widget — interactive stability diagram + cavity beam fitter</h4>
+        <div class="widget-grid">
+          <div><canvas id="canvas-stab" data-h="360"></canvas><p class="hint">Drag the point (or use the sliders).</p></div>
+          <div class="controls">
+            <div class="ctl"><label>L (cm)</label><input id="fitter-L" type="number" min="1" max="1000" step="1" value="30"></div>
+            <div class="ctl"><label>λ (nm)</label><input id="fitter-lambda" type="number" min="300" max="2000" step="0.1" value="632.8"></div>
+            <div class="chk"><label><input id="fitter-plane1" type="checkbox" checked> M₁ plane (R<sub>c1</sub> = ∞)</label></div>
+            <div class="ctl"><label>R<sub>c1</sub> / L</label><input id="fitter-Rc1" type="range" min="0.55" max="5" step="0.01" value="2.0"><output id="fitter-Rc1-val">2.0 L</output></div>
+            <div class="chk"><label><input id="fitter-plane2" type="checkbox"> M₂ plane (R<sub>c2</sub> = ∞)</label></div>
+            <div class="ctl"><label>R<sub>c2</sub> / L</label><input id="fitter-Rc2" type="range" min="0.55" max="5" step="0.01" value="1.67"><output id="fitter-Rc2-val">1.67 L</output></div>
+            <button id="fitter-confocal" class="btn" type="button">Snap to confocal</button>
+            <button id="fitter-hene" class="btn" type="button">Snap to He–Ne</button>
+          </div>
+        </div>
+        <div class="readout readout-grid" id="fitter-out"></div>
+        <div id="plot-env" class="plotbox"></div>
+      </div>
+
+      <h3>5.3 Beam parameters of a stable cavity</h3>
+      <p>Solving R(z<sub>i</sub>) = R<sub>ci</sub> in g-parameters gives (for stable cavities):</p>
+      <div class="eq" data-eq="spots"></div>
+      <p>For a symmetric cavity (g₁ = g₂ = g) the waist lies at the centre,</p>
+      <div class="eq" data-eq="symm"></div>
+      <p>and for plano–concave (R<sub>c1</sub> = ∞) the waist sits on the flat mirror with w₀² =
+      (λ/π)√(L(R<sub>c2</sub>−L)). All spot sizes diverge as g₁g₂ → 1 — the edge of stability.</p>
+
+      <h3>5.4 How the cavity position shapes laser behaviour</h3>
+      <ul class="keylist">
+        <li><strong>Mode size &amp; gain extraction.</strong> Large fundamental modes (near
+        plane–plane or concentric) fill more gain volume and extract more power but invite several
+        transverse modes; small modes (near-confocal) concentrate intensity and lower threshold but
+        sample less of the medium. End-pumped solid-state designs mode-match the pump spot to the
+        cavity waist.</li>
+        <li><strong>Misalignment sensitivity.</strong> Near the boundaries the mode size diverges or
+        collapses; small tilts move the mode axis far, and output drops quickly. Mid-stable designs
+        (g₁g₂ ≈ 0.3–0.7) tolerate tilt and thermal drift — the commercial default.</li>
+        <li><strong>Transverse mode content / M².</strong> Large modes have closely spaced
+        transverse frequencies and little loss discrimination → multimode oscillation degrades M².
+        A limiting aperture (small Fresnel number) is an effective mode filter.</li>
+        <li><strong>Output divergence.</strong> θ_div = λ/(πw₀): large-waist (long-Rayleigh) cavities
+        give well-collimated output.</li>
+        <li><strong>Thermal lens.</strong> Pump heating changes the effective g-parameters; a cavity
+        near a stability edge can flip unstable with pump power. Designs must stay stable across the
+        thermal-lens range.</li>
+        <li><strong>Unstable resonators.</strong> In high-gain lasers, unstable cavities (g₁g₂&lt;0
+        or &gt;1) let the beam expand to fill the gain volume, output coupled around the mirror edge.</li>
+      </ul>
+    </section>
+
+    <section id="sec-examples">
+      <h2>6 · Practical example and applications</h2>
+
+      <h3>6.1 Worked example: a helium–neon laser</h3>
+      <p>He–Ne at λ = 632.8 nm, L = 0.30 m, flat high reflector + concave output coupler
+      R<sub>c2</sub> = 0.50 m: g₁ = 1, g₂ = 0.4, g₁g₂ = 0.40 — comfortably stable. The beam follows
+      from Sec. 5.3; the neon gain is Doppler-broadened to ≈ 1.5 GHz so about three longitudinal
+      modes fit; with the narrow discharge-tube aperture suppressing higher orders, the laser runs
+      TEM₀₀. If R<sub>c2</sub> were 0.30 m (hemispherical limit, g₂ = 0) the cavity would sit on the
+      stability boundary and misalignment sensitivity would explode.</p>
+      <div class="panel widget">
+        <h4>Calculator — He–Ne laser</h4>
+        <div class="controls controls-row">
+          <div class="ctl"><label>λ (nm)</label><input id="hene-lambda" type="number" min="500" max="1600" step="0.1" value="632.8"></div>
+          <div class="ctl"><label>L (m)</label><input id="hene-L" type="number" min="0.02" max="2" step="0.005" value="0.30"></div>
+          <div class="ctl"><label>R<sub>c2</sub> (m)</label><input id="hene-Rc2" type="number" min="0.03" max="3" step="0.01" value="0.50"></div>
+          <div class="ctl"><label>Δν_g (GHz)</label><input id="hene-dg" type="number" min="0.1" max="10" step="0.1" value="1.5"></div>
+        </div>
+        <div class="readout readout-grid" id="hene-out"></div>
+      </div>
+
+      <h3>6.2 Semiconductor laser diode</h3>
+      <p>An edge-emitting diode is an FP cavity whose mirrors are the cleaved crystal facets. With
+      n ≈ 3.5, R = ((n−1)/(n+1))² ≈ 0.31 — enough because the gain is large. For L = 300 µm the
+      mirror-loss term is ln(1/R)/L ≈ 39 cm⁻¹, and with n<sub>g</sub> ≈ 4 the mode spacing is
+      c/(2n<sub>g</sub>L) ≈ 125 GHz ≈ 0.3 nm at 850 nm: a multimode FP diode emits a comb of such
+      lines under its gain bandwidth. (Transverse modes are set by the semiconductor waveguide —
+      the stability analysis above does not apply.)</p>
+      <div class="panel widget">
+        <h4>Calculator — FP diode laser</h4>
+        <div class="controls controls-row">
+          <div class="ctl"><label>n</label><input id="diode-n" type="number" min="2.5" max="4.5" step="0.05" value="3.5"></div>
+          <div class="ctl"><label>n<sub>g</sub></label><input id="diode-ng" type="number" min="1" max="5" step="0.05" value="4"></div>
+          <div class="ctl"><label>L (µm)</label><input id="diode-L" type="number" min="50" max="2000" step="10" value="300"></div>
+          <div class="ctl"><label>λ (nm)</label><input id="diode-lambda" type="number" min="350" max="1600" step="1" value="850"></div>
+        </div>
+        <div class="readout readout-grid" id="diode-out"></div>
+      </div>
+
+      <h3>6.3 The confocal scanning interferometer</h3>
+      <p>A spherical-mirror FP with R<sub>c1</sub> = R<sub>c2</sub> = L (confocal) is the standard
+      instrument for observing laser modes. A ray retraces its path after <em>two</em> round trips,
+      so the effective FSR is c/4L, and all TEM<sub>lm</sub> orders are transmitted at nearly the
+      same frequencies (uniform c/4L comb) — an instrument insensitive to alignment and to the beam’s
+      transverse profile, unlike the plane–plane etalon. A piezo scans L; the photodiode traces the
+      tested laser’s mode comb (e.g. the three He–Ne modes above).</p>
+      <div class="panel widget">
+        <h4>Calculator — confocal scanning interferometer</h4>
+        <div class="controls controls-row">
+          <div class="ctl"><label>L (cm)</label><input id="conf-L" type="number" min="0.5" max="200" step="0.5" value="30"></div>
+        </div>
+        <div class="readout readout-grid" id="conf-out"></div>
+      </div>
+
+      <h3>6.4 Other applications</h3>
+      <ul class="keylist">
+        <li><strong>Filters &amp; telecom.</strong> Thin etalons as narrow-band filters in WDM and as
+        frequency references for locking.</li>
+        <li><strong>Frequency stabilisation.</strong> High-finesse cavity as frequency discriminator;
+        Pound–Drever–Hall locking narrows the laser linewidth far below the cavity linewidth.</li>
+        <li><strong>Gravitational-wave detection.</strong> LIGO’s kilometre arms are FP cavities with
+        finesse of several hundred, multiplying the effective path length.</li>
+        <li><strong>Cavity-enhanced sensing.</strong> Long effective path in high-finesse cavities
+        makes weak absorption measurable; resonances shift with length, index, temperature, pressure.</li>
+      </ul>
+    </section>
+
+    <section id="sec-end">
+      <h2>7 · Conclusion</h2>
+      <p>The FP structure combines multiple-beam interference and optical feedback. As an
+      interferometer, its transmission is the Airy function with FSR c/2nd and finesse
+      π√R/(1−R) defining the resolving power. As a laser resonator, the same geometry fixes the
+      longitudinal spacing c/2nL and, through the mirror curvatures, the Hermite–Gaussian transverse
+      modes. Stability requires 0 ≤ g₁g₂ ≤ 1, and the position inside that region sets mode size,
+      mode content, alignment tolerance and thermal robustness — practical designs avoid the
+      boundaries unless a specific property (large mode volume or tiny waist) is wanted.</p>
+    </section>
+
+    <section id="sec-refs">
+      <h2>8 · References</h2>
+      <ol class="refs">
+        <li>C. Fabry, A. Pérot, “On the Application of Interference Phenomena…”, <em>Astrophys. J.</em> <b>9</b>, 87 (1899).</li>
+        <li>M. Born, E. Wolf, <em>Principles of Optics</em>, 7th ed., CUP (1999), Ch. 7.</li>
+        <li>E. Hecht, <em>Optics</em>, 5th ed., Pearson (2017).</li>
+        <li>B. E. A. Saleh, M. C. Teich, <em>Fundamentals of Photonics</em>, 3rd ed., Wiley (2019).</li>
+        <li>A. E. Siegman, <em>Lasers</em>, University Science Books (1986).</li>
+        <li>O. Svelto, <em>Principles of Lasers</em>, 5th ed., Springer (2010).</li>
+        <li>P. W. Milonni, J. H. Eberly, <em>Laser Physics</em>, Wiley (2010).</li>
+        <li>A. Yariv, P. Yeh, <em>Photonics</em>, 6th ed., Oxford (2007).</li>
+        <li>J. M. Vaughan, <em>The Fabry–Pérot Interferometer</em>, Adam Hilger (1989).</li>
+        <li>G. Hernandez, <em>Fabry–Pérot Interferometers</em>, CUP (1986).</li>
+        <li>N. Hodgson, H. Weber, <em>Laser Resonators and Beam Propagation</em>, 2nd ed., Springer (2005).</li>
+        <li>L. A. Coldren, S. W. Corzine, M. Mašanović, <em>Diode Lasers and Photonic ICs</em>, 2nd ed., Wiley (2012).</li>
+        <li>A. L. Schawlow, C. H. Townes, <em>Phys. Rev.</em> <b>112</b>, 1940 (1958).</li>
+        <li>T. H. Maiman, <em>Nature</em> <b>187</b>, 493 (1960).</li>
+        <li>A. G. Fox, T. Li, <em>Bell Syst. Tech. J.</em> <b>40</b>, 453 (1961).</li>
+        <li>H. Kogelnik, T. Li, “Laser beams and resonators”, <em>Appl. Opt.</em> <b>5</b>, 1550 (1966).</li>
+        <li>R. W. P. Drever et al., <em>Appl. Phys. B</em> <b>31</b>, 97 (1983).</li>
+        <li>B. P. Abbott et al., “LIGO…”, <em>Rep. Prog. Phys.</em> <b>72</b>, 076901 (2009).</li>
+        <li>Course figures: <em>Optique et Photonique Instrumentale</em>, Le Mans Université (F. Varet).</li>
+      </ol>
+    </section>
+
+    <footer>
+      <p>Built as a study companion to the report <em>Fabry–Pérot Interferometer: Modes and
+      Stability of the Cavity</em>. Physics: <code>js/physics.js</code> · tests: <code>node tests.js</code>.</p>
+    </footer>
+  </main>
+</div>
+<script defer src="js/physics.js"></script>
+<script defer src="js/equations.js"></script>
+<script defer src="js/theme.js"></script>
+<script defer src="js/widgets.js"></script>
+</body>
+</html>
