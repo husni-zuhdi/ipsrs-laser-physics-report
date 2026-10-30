@@ -18,12 +18,12 @@
 \setlength{\parskip}{4pt}
 \setlength{\parindent}{0pt}
 
-\newcommand{\FP}{Fabry--P\'erot}
+\newcommand{\FP}{Fabry-P\'erot}
 \newcommand{\FSR}{\Delta\nu_{\mathrm{FSR}}}
 \newcommand{\Fin}{\mathcal{F}}
 \newcommand{\ii}{\mathrm{i}}
 
-\title{\textbf{Fabry--P\'erot Interferometer:\\ Modes and Stability of the Cavity}}
+\title{\textbf{Fabry-P\'erot Interferometer:\\ Modes and Stability of the Cavity}}
 \author{
 	Mohammed Al-Twaity\\
 	Husni Naufal Zuhdi\\
@@ -37,7 +37,7 @@
 	
 	\begin{abstract}
 		\noindent
-		The \FP{} interferometer, two parallel partially reflecting surfaces facing each other, is one of the simplest and most widely used devices in optics. It is a high-resolution spectral analyser when used passively, and it is also the basic geometry of almost every laser resonator. This report reviews the principle of multiple-beam interference in a \FP{} etalon (Airy function, free spectral range, finesse and resolving power) and shows how the same structure acts as a resonator for a laser. We then discuss the longitudinal and transverse modes of an optical cavity, derive the stability condition $0\le g_1g_2\le 1$ from ray-transfer matrices, and analyse the Gaussian beam supported by a stable cavity. Finally, we discuss how the cavity configuration influences laser performance (beam size, mode content, alignment sensitivity) and illustrate the results with a helium--neon laser, a semiconductor laser diode, and other applications.
+		The \FP{} interferometer, two parallel partially reflecting surfaces facing each other, is one of the simplest and most widely used devices in optics. It is a high-resolution spectral analyser when used passively, and it is also the basic geometry of almost every laser resonator. This report reviews the principle of multiple-beam interference in a \FP{} etalon (Airy function, free spectral range, finesse and resolving power) and shows how the same structure acts as a resonator for a laser. We then discuss the longitudinal and transverse modes of an optical cavity, derive the stability condition $0\le g_1g_2\le 1$ from ray-transfer matrices, and analyse the Gaussian beam supported by a stable cavity. Finally, we discuss how the cavity configuration influences laser performance (beam size, mode content, alignment sensitivity) and illustrate the results with a helium-neon laser, a semiconductor laser diode, and other applications.
 	\end{abstract}
 	
 	
@@ -47,7 +47,7 @@
 	
 	A \textbf{\FP{} interferometer} (FPI) is a device consists of two parallel, with partially reflecting surfaces that separated by a distance $d$. Each surfaces can be coated with a transparent plate, which usually called a \FP{} etalon. The device was introduced bye Charles Fabry and Alfred P\'erot in 1899 as a high resolution spectroscopy tool \cite{FabryPerot1899}. The light entering the gap is reflected back and forth many times, and then a small fraction of it leaves through the second surface at every interaction. These many transmitted beams are copies of the incident wave with a delay of constant optical path and they interfere with each other \cite{BornWolf, Hecht, Vaughan}.
 	
-	An \textbf{optical cavity} (or optical resonator) is a more general concept: an arrangement of reflecting elements that confines light so that it circulates along a closed path and reproduces itself after one round trip. The \FP{} cavity, formed by two mirrors facing each other, is the simplest example of such a \emph{standing-wave} resonator. The mirrors may be flat or curved. A flat--flat pair is the classical \FP{} etalon; a pair of curved mirrors forms the spherical-mirror resonator used in most lasers \cite{Siegman,Svelto,SalehTeich}.
+	An \textbf{optical cavity} (or optical resonator) is a more general concept: an arrangement of reflecting elements that traps light so that it circulates along a closed path and self-reproduce each trips. The \FP{} cavity, formed by two mirrors facing each other, is one of the example of a \emph{standing-wave} resonator. The mirrors could be flat or curved. A flat-flat pair is the classical \FP{} etalon; a pair of curved mirrors forms the spherical-mirror resonator used in most lasers \cite{Siegman,Svelto,SalehTeich}.
 	
 	The same physical structure plays two different roles:
 	\begin{itemize}
@@ -343,7 +343,7 @@
 	\subsection{Transverse modes: derivation from the paraxial wave equation}
 	\label{sec:transverse}
 	
-	The longitudinal modes tell us \emph{which frequencies} fit in the cavity. The transverse modes describe \emph{how the field is distributed across the beam}. We derive them directly from the paraxial wave equation, in five steps (Gaussian beam, then Hermite--Gaussian modes), and then use them to find the beam and the mode frequencies of a given cavity \cite{Siegman,SalehTeich,KogelnikLi1966}.
+	The longitudinal modes tell us \emph{which frequencies} fit in the cavity. The transverse modes describe \emph{how the field is distributed across the beam}. We derive them directly from the paraxial wave equation, in five steps (Gaussian beam, then Hermite-Gaussian modes), and then use them to find the beam and the mode frequencies of a given cavity \cite{Siegman,SalehTeich,KogelnikLi1966}.
 	
 	\subsubsection*{Step 1: Helmholtz equation and paraxial approximation}
 	
@@ -464,7 +464,7 @@
 	\end{figure}
 	
 	
-	\subsubsection*{Step 5: Higher-order solutions: Hermite--Gaussian modes}
+	\subsubsection*{Step 5: Higher-order solutions: Hermite-Gaussian modes}
 	
 	The Gaussian beam is the simplest solution of Eq.~\eqref{eq:paraxial}. To find the others we look for solutions in which $x$ and $y$ are separable products of a function times the fundamental beam:
 	\begin{equation}
@@ -493,19 +493,19 @@
 	\begin{equation}
 		H_0=1,\qquad H_1(\xi)=2\xi,\qquad H_2(\xi)=4\xi^2-2,\qquad H_3(\xi)=8\xi^3-12\xi,\ \dots
 	\end{equation}
-	The same holds for $y$ with an integer $m$. Each unit of $l$ or $m$ adds one more factor $e^{\mathrm{i}\zeta}$, so the Gouy phase becomes $(l+m+1)\,\zeta(z)$. Putting the polynomials together with the Gaussian envelope gives the complete \textbf{Hermite--Gaussian mode} $\mathrm{TEM}_{lm}$:
+	The same holds for $y$ with an integer $m$. Each unit of $l$ or $m$ adds one more factor $e^{\mathrm{i}\zeta}$, so the Gouy phase becomes $(l+m+1)\,\zeta(z)$. Putting the polynomials together with the Gaussian envelope gives the complete \textbf{Hermite-Gaussian mode} $\mathrm{TEM}_{lm}$:
 	\begin{equation}
 		U_{lm}(x,y,z)=A_{lm}\,\frac{w_0}{w(z)}\,H_l\!\left[\frac{\sqrt2\,x}{w(z)}\right]H_m\!\left[\frac{\sqrt2\,y}{w(z)}\right]
 		e^{-\frac{x^2+y^2}{w^2(z)}}\,
 		\exp\!\left\{-\mathrm{i}\left[kz+\frac{k\,(x^2+y^2)}{2R(z)}-(l+m+1)\,\zeta(z)\right]\right\}.
 		\label{eq:hg}
 	\end{equation}
-	Compared with the fundamental mode, $w(z)$ and $R(z)$ are the same, so \emph{all} modes of a cavity fit the same mirrors. What changes is the pattern: $l$ and $m$ count the nodal lines along $x$ and $y$, the pattern grows with the order (its extent is approximately proportional to $\sqrt{l+m+1}\,w$), and the Gouy phase accumulates $l+m+1$ times faster (Figs.~\ref{fig:hgmodes} and \ref{fig:hgsurf}). In cavities with circular symmetry the same family is written with Laguerre--Gaussian modes $\mathrm{TEM}_{p\ell}$, for which $l+m$ is replaced by $2p+|\ell|$.
+	Compared with the fundamental mode, $w(z)$ and $R(z)$ are the same, so \emph{all} modes of a cavity fit the same mirrors. What changes is the pattern: $l$ and $m$ count the nodal lines along $x$ and $y$, the pattern grows with the order (its extent is approximately proportional to $\sqrt{l+m+1}\,w$), and the Gouy phase accumulates $l+m+1$ times faster (Figs.~\ref{fig:hgmodes} and \ref{fig:hgsurf}). In cavities with circular symmetry the same family is written with Laguerre-Gaussian modes $\mathrm{TEM}_{p\ell}$, for which $l+m$ is replaced by $2p+|\ell|$.
 	
 	\begin{figure}[ht]
 		\centering
 		\includegraphics[width=0.78\textwidth]{images/modes.png}
-		\caption{Transverse intensity patterns $|U_{lm}|^2$ of Hermite--Gaussian modes $\mathrm{TEM}_{lm}$ (the labels give $lm$). The first index $l$ counts the dark nodal lines along $x$ and the second index $m$ along $y$, so $\mathrm{TEM}_{00}$ is a single spot, $\mathrm{TEM}_{10}$ has two lobes side by side, and $\mathrm{TEM}_{33}$ has a $4\times4$ array of lobes. The pattern grows with the order, as stated after Eq.~\eqref{eq:hg}. Source: Le Mans Universit\'e course (F.~Varet), \url{https://perso.univ-lemans.fr/~fvaret/opi/cours_maj/OPI_ang_M01_C03_web_gen_auroraW/co/Contenu_13.html}.}
+		\caption{Transverse intensity patterns $|U_{lm}|^2$ of Hermite-Gaussian modes $\mathrm{TEM}_{lm}$ (the labels give $lm$). The first index $l$ counts the dark nodal lines along $x$ and the second index $m$ along $y$, so $\mathrm{TEM}_{00}$ is a single spot, $\mathrm{TEM}_{10}$ has two lobes side by side, and $\mathrm{TEM}_{33}$ has a $4\times4$ array of lobes. The pattern grows with the order, as stated after Eq.~\eqref{eq:hg}. Source: Le Mans Universit\'e course (F.~Varet), \url{https://perso.univ-lemans.fr/~fvaret/opi/cours_maj/OPI_ang_M01_C03_web_gen_auroraW/co/Contenu_13.html}.}
 		\label{fig:hgmodes}
 	\end{figure}
 	
@@ -553,7 +553,7 @@
 		\boxed{\,\nu_q=q\,\frac{c}{2nL}+\frac{\Delta\zeta}{\pi}\,(l+m+1)\,\frac{c}{2nL}\,}
 		\label{eq:transfreq}
 	\end{equation}
-	or, with $\nu_F=c/2nL$ the free spectral range, $\nu_q=q\,\nu_F+\dfrac{\Delta\zeta}{\pi}(l+m+1)\,\nu_F$. The first term is the longitudinal comb of Eq.~\eqref{eq:longmodes}. The second term shifts each transverse mode by a fraction of the FSR. The FSR is therefore the same as for the passive Fabry--P\'erot interferometer, and the transverse indices only add an offset.
+	or, with $\nu_F=c/2nL$ the free spectral range, $\nu_q=q\,\nu_F+\dfrac{\Delta\zeta}{\pi}(l+m+1)\,\nu_F$. The first term is the longitudinal comb of Eq.~\eqref{eq:longmodes}. The second term shifts each transverse mode by a fraction of the FSR. The FSR is therefore the same as for the passive Fabry-P\'erot interferometer, and the transverse indices only add an offset.
 	
 	\paragraph{The Gouy-phase shift in terms of the mirrors.} From $z=z_R\tan\zeta$,
 	\begin{equation}
@@ -578,7 +578,7 @@
 			\toprule
 			Cavity & $g_1g_2$ & $\Delta\zeta/\pi$ & Offset per order & Consequence\\
 			\midrule
-			Plane--plane & $1$ & $0$ & none & all $\mathrm{TEM}_{lm}$ degenerate\\
+			Plane-plane & $1$ & $0$ & none & all $\mathrm{TEM}_{lm}$ degenerate\\
 			Plano-concave, $L=0.3$\,m, $R_{c2}=0.5$\,m & $0.4$ & $0.282$ & $0.282\,\nu_F$ & $\Delta\nu_T\approx141$\,MHz\\
 			Symmetric confocal & $0$ & $1/2$ & $\nu_F/2$ & even and odd orders interleave, spacing $c/4L$\\
 			Concentric & $1$ (both $g<0$) & $1$ & $\nu_F$ & all $\mathrm{TEM}_{lm}$ degenerate\\
@@ -592,7 +592,7 @@
 	\begin{itemize}
 		\item Modes with the same $q$ and different order $N=l+m$ are separated by $\Delta\nu_T=\dfrac{\Delta\zeta}{\pi}\,\nu_F$ per unit of $N$, a fraction of the longitudinal spacing.
 		\item All modes with the same $N=l+m$ have the same frequency (they are degenerate), and there are $N+1$ of them. The degeneracy is lifted by asymmetries such as astigmatic mirrors or an aperture.
-		\item In the plane--plane and concentric limits $\Delta\zeta/\pi=0$ or $1$, so all transverse modes of a given $q$ coincide. In the confocal cavity $\Delta\zeta/\pi=1/2$: modes of even $N$ coincide with the longitudinal comb and modes of odd $N$ fall exactly half-way between, which gives the spectrum with spacing $c/4L$ used in the confocal scanning interferometer (Sec.~\ref{sec:examples}).
+		\item In the plane-plane and concentric limits $\Delta\zeta/\pi=0$ or $1$, so all transverse modes of a given $q$ coincide. In the confocal cavity $\Delta\zeta/\pi=1/2$: modes of even $N$ coincide with the longitudinal comb and modes of odd $N$ fall exactly half-way between, which gives the spectrum with spacing $c/4L$ used in the confocal scanning interferometer (Sec.~\ref{sec:examples}).
 	\end{itemize}
 	
 	
@@ -643,7 +643,7 @@
 			\draw[thick,domain=0.5:2,samples=40] plot ({\x},{1/\x});
 			\draw[thick,domain=-2:-0.5,samples=40] plot ({\x},{1/\x});
 			% points
-			\fill (1,1) circle (0.035) node[above right,font=\footnotesize] {plane--plane};
+			\fill (1,1) circle (0.035) node[above right,font=\footnotesize] {plane-plane};
 			\fill (0,0) circle (0.035) node[below left,font=\footnotesize] {confocal};
 			\fill (-1,-1) circle (0.035) node[below left,font=\footnotesize] {concentric};
 			\fill (1,0) circle (0.035) node[below,font=\footnotesize] {hemispherical};
@@ -665,13 +665,13 @@
 			\toprule
 			Configuration & $R_{c1}$ & $R_{c2}$ & $g_1$ & $g_2$ & Status\\
 			\midrule
-			Plane--plane (flat \FP{}) & $\infty$ & $\infty$ & $1$ & $1$ & marginal\\
+			Plane-plane (flat \FP{}) & $\infty$ & $\infty$ & $1$ & $1$ & marginal\\
 			Symmetric confocal & $L$ & $L$ & $0$ & $0$ & stable (boundary)\\
 			Concentric (spherical) & $L/2$ & $L/2$ & $-1$ & $-1$ & marginal\\
 			Hemispherical & $\infty$ & $L$ & $1$ & $0$ & stable (boundary)\\
 			Plano-concave & $\infty$ & $R_{c2}>L$ & $1$ & $0<g_2<1$ & stable\\
 			Symmetric, $R_c>L$ (long radius) & $R_c$ & $R_c$ & $g$ & $g$ & stable\\
-			Convex--concave / $R_c<L/2$ (e.g.) & --- & --- & $g_1g_2<0$ or $>1$ & & unstable\\
+			Convex-concave / $R_c<L/2$ (e.g.) & --- & --- & $g_1g_2<0$ or $>1$ & & unstable\\
 			\bottomrule
 		\end{tabular}
 		\caption{Common two-mirror cavity configurations and their stability.}
@@ -704,7 +704,7 @@
 	
 	The position of the cavity in the $(g_1,g_2)$ diagram determines how the laser behaves in practice. The main effects are:
 	
-	\textbf{Mode size and gain extraction.} The mode volume of the $\mathrm{TEM}_{00}$ beam must overlap the pumped region of the gain medium. A large fundamental mode (cavities near the plane--plane or concentric points) fills a large volume of active material and can extract more power, but it also tends to let several transverse modes oscillate. A small mode (confocal and near-confocal) concentrates the field, giving a higher intensity for a given power and a lower threshold in small gain volumes, but it samples less of the medium. In end-pumped solid-state lasers, the pump spot and the cavity waist are therefore chosen together (mode matching).
+	\textbf{Mode size and gain extraction.} The mode volume of the $\mathrm{TEM}_{00}$ beam must overlap the pumped region of the gain medium. A large fundamental mode (cavities near the plane-plane or concentric points) fills a large volume of active material and can extract more power, but it also tends to let several transverse modes oscillate. A small mode (confocal and near-confocal) concentrates the field, giving a higher intensity for a given power and a lower threshold in small gain volumes, but it samples less of the medium. In end-pumped solid-state lasers, the pump spot and the cavity waist are therefore chosen together (mode matching).
 	
 	\begin{figure}[ht]
 		\centering
@@ -721,11 +721,11 @@
 				\legend{mirror spot $w_1=w_2$, waist $w_0$}
 			\end{axis}
 		\end{tikzpicture}
-		\caption{Spot sizes of a symmetric cavity, from Eq.~\eqref{eq:symm}. Near $g=\pm1$ (plane--plane and concentric limits) the mirror spot grows without bound; at $g=0$ (confocal) the beam is smallest on the mirrors. The waist is largest as $g\to1$ and vanishes as $g\to-1$.}
+		\caption{Spot sizes of a symmetric cavity, from Eq.~\eqref{eq:symm}. Near $g=\pm1$ (plane-plane and concentric limits) the mirror spot grows without bound; at $g=0$ (confocal) the beam is smallest on the mirrors. The waist is largest as $g\to1$ and vanishes as $g\to-1$.}
 		\label{fig:spotsizes}
 	\end{figure}
 	
-	\textbf{Misalignment sensitivity.} Near the stability boundaries, $1-g_1g_2\to 0$ or $g_1g_2\to0$ in a way that makes the mode size diverge or collapse (Fig.~\ref{fig:spotsizes}). Here a tiny tilt of one mirror moves the axis of the mode a long way across the mirrors, and the beam may walk off the aperture or the gain region, so the output power drops quickly. Plane--plane and concentric cavities are the most delicate. A cavity placed near the middle of the stable region (such as $g_1g_2\approx0.3$--$0.7$) tolerates mirror tilt and spacing drift much better, which is why it is the default choice for commercial lasers \cite{Siegman,HodgsonWeber}.
+	\textbf{Misalignment sensitivity.} Near the stability boundaries, $1-g_1g_2\to 0$ or $g_1g_2\to0$ in a way that makes the mode size diverge or collapse (Fig.~\ref{fig:spotsizes}). Here a tiny tilt of one mirror moves the axis of the mode a long way across the mirrors, and the beam may walk off the aperture or the gain region, so the output power drops quickly. Plane-plane and concentric cavities are the most delicate. A cavity placed near the middle of the stable region (such as $g_1g_2\approx0.3$--$0.7$) tolerates mirror tilt and spacing drift much better, which is why it is the default choice for commercial lasers \cite{Siegman,HodgsonWeber}.
 	
 	\textbf{Transverse mode content and beam quality.} Large fundamental modes (small $|{\arccos\sqrt{g_1g_2}}|$) have closely spaced and nearly degenerate transverse modes, and diffraction losses differ little between the $\mathrm{TEM}_{00}$ mode and higher orders. The laser tends to oscillate on several transverse modes, which degrades the beam quality factor $M^2$. Fox and Li characterised this with the \emph{Fresnel number} $N_F=a^2/(\lambda L)$, where $a$ is the mirror (or aperture) radius: high-order modes suffer much larger diffraction loss when $N_F$ is small, which is why a limiting aperture is an effective mode filter \cite{FoxLi1961}.
 	
@@ -740,9 +740,9 @@
 	\label{sec:examples}
 	%==========================================================================
 	
-	\subsection{Worked example: a helium--neon laser}
+	\subsection{Worked example: a helium-neon laser}
 	
-	A small helium--neon laser at $\lambda=\SI{632.8}{nm}$ typically has a cavity length of about $L=\SI{0.30}{m}$ with a flat high reflector and a concave output coupler. We take the plano-concave case $R_{c1}=\infty$, $R_{c2}=\SI{0.50}{m}$, which gives
+	A small helium-neon laser at $\lambda=\SI{632.8}{nm}$ typically has a cavity length of about $L=\SI{0.30}{m}$ with a flat high reflector and a concave output coupler. We take the plano-concave case $R_{c1}=\infty$, $R_{c2}=\SI{0.50}{m}$, which gives
 	\begin{equation}
 		g_1=1,\qquad g_2=1-\frac{0.30}{0.50}=0.40,\qquad g_1g_2=0.40.
 	\end{equation}
@@ -768,13 +768,13 @@
 	
 	\subsection{The confocal scanning interferometer}
 	
-	A spherical-mirror \FP{} interferometer with $R_{c1}=R_{c2}=L$ (confocal) is the standard instrument for observing the longitudinal modes of lasers. In this geometry a ray retraces its path after \emph{two} round trips, so the free spectral range is $c/4L$, and all modes of the cavity are transmitted at the same frequencies, which makes the instrument insensitive to the exact alignment and to the transverse profile of the laser beam, in contrast with the plane--plane etalon. A piezo scans $L$ by a fraction of a wavelength and a photodiode shows the mode comb of the laser under test, such as the three modes of the HeNe laser above \cite{Hernandez,Vaughan}.
+	A spherical-mirror \FP{} interferometer with $R_{c1}=R_{c2}=L$ (confocal) is the standard instrument for observing the longitudinal modes of lasers. In this geometry a ray retraces its path after \emph{two} round trips, so the free spectral range is $c/4L$, and all modes of the cavity are transmitted at the same frequencies, which makes the instrument insensitive to the exact alignment and to the transverse profile of the laser beam, in contrast with the plane-plane etalon. A piezo scans $L$ by a fraction of a wavelength and a photodiode shows the mode comb of the laser under test, such as the three modes of the HeNe laser above \cite{Hernandez,Vaughan}.
 	
 	\subsection{Other applications}
 	
 	\begin{itemize}
 		\item \textbf{Optical filters and telecommunications.} Thin etalons act as narrow-band filters in wavelength-division multiplexing and as wavelength references for laser frequency locking \cite{Hecht,Yariv}.
-		\item \textbf{Laser frequency stabilisation.} A high-finesse cavity serves as a frequency discriminator. In the Pound--Drever--Hall technique the laser is locked to a cavity resonance, which narrows its linewidth far below the cavity linewidth \cite{Drever1983}.
+		\item \textbf{Laser frequency stabilisation.} A high-finesse cavity serves as a frequency discriminator. In the Pound-Drever-Hall technique the laser is locked to a cavity resonance, which narrows its linewidth far below the cavity linewidth \cite{Drever1983}.
 		\item \textbf{Gravitational-wave detection.} The kilometre-scale arms of LIGO are \FP{} cavities with a finesse of several hundred, which multiplies the effective path length and thus the phase signal of a passing gravitational wave \cite{Abbott2009}.
 		\item \textbf{Cavity-enhanced spectroscopy and sensing.} The long effective path in a high-finesse cavity makes weak absorptions measurable, and the resonance shifts when the optical path changes, so cavities also work as sensors of length, refractive index, temperature and pressure.
 	\end{itemize}
@@ -795,8 +795,8 @@
 		\bibitem{Svelto} O.~Svelto, \emph{Principles of Lasers}, 5th ed. (Springer, New York, 2010).
 		\bibitem{Milonni} P.~W. Milonni and J.~H. Eberly, \emph{Laser Physics} (Wiley, Hoboken, 2010).
 		\bibitem{Yariv} A.~Yariv and P.~Yeh, \emph{Photonics: Optical Electronics in Modern Communications}, 6th ed. (Oxford University Press, New York, 2007).
-		\bibitem{Vaughan} J.~M. Vaughan, \emph{The Fabry--Perot Interferometer: History, Theory, Practice and Applications} (Adam Hilger, Bristol, 1989).
-		\bibitem{Hernandez} G.~Hernandez, \emph{Fabry--Perot Interferometers} (Cambridge University Press, Cambridge, 1986).
+		\bibitem{Vaughan} J.~M. Vaughan, \emph{The Fabry-Perot Interferometer: History, Theory, Practice and Applications} (Adam Hilger, Bristol, 1989).
+		\bibitem{Hernandez} G.~Hernandez, \emph{Fabry-Perot Interferometers} (Cambridge University Press, Cambridge, 1986).
 		\bibitem{HodgsonWeber} N.~Hodgson and H.~Weber, \emph{Laser Resonators and Beam Propagation}, 2nd ed. (Springer, New York, 2005).
 		\bibitem{Coldren} L.~A. Coldren, S.~W. Corzine, and M.~L. Ma\v{s}anovi\'c, \emph{Diode Lasers and Photonic Integrated Circuits}, 2nd ed. (Wiley, Hoboken, 2012).
 		\bibitem{SchawlowTownes1958} A.~L. Schawlow and C.~H. Townes, ``Infrared and optical masers,'' \emph{Phys. Rev.} \textbf{112}, 1940--1949 (1958).

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.29)  30 OCT 2026 14:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.10.29)  30 OCT 2026 15:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1089,35 +1089,24 @@ Underfull \hbox (badness 1178) in paragraph at lines 583--584
 []|\T1/lmr/m/n/10 even and odd or-ders in-ter-
  []
 
-[12 <./images/modes_jet.png>] [13] [14] [15] [16] [17]
-Underfull \hbox (badness 6876) in paragraph at lines 809--810
-[]\T1/lmr/m/n/10.95 Thorlabs, Inc., ``Fabry-Perot In-ter-fer-om-e-ter Tu-to-ria
-l,'' [][]$\T1/lmtt/m/n/10.95 https : / / www . thorlabs . com /
- []
-
-
-Underfull \hbox (badness 6268) in paragraph at lines 810--811
-\T1/lmtt/m/n/10.95 / / hyperphysics . phy-[]astr . gsu . edu / hbase / phyopt /
- fabryperot . html$[][] \T1/lmr/m/n/10.95 (ac-cessed Oc-to-ber
- []
-
-[18] (Fabry-Perot Mode and Stability.aux)
+[12 <./images/modes_jet.png>] [13] [14] [15] [16] [17] [18]
+(Fabry-Perot Mode and Stability.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `"Fabry-Perot Mode and Stability".out' has no
 t changed.
-(rerunfilecheck)             Checksum: B65ABC9B6DBDD5095C6DA1645416D897;5664.
+(rerunfilecheck)             Checksum: 48F43BA141C49AC9D2D36EBE62C80710;5652.
  ) 
 Here is how much of TeX's memory you used:
- 37994 strings out of 467871
- 922174 string characters out of 5417891
- 1583623 words of memory out of 5000000
- 66179 multiletter control sequences out of 15000+600000
- 710332 words of font info for 103 fonts, out of 8000000 for 9000
+ 37987 strings out of 467871
+ 922064 string characters out of 5417891
+ 1585277 words of memory out of 5000000
+ 66175 multiletter control sequences out of 15000+600000
+ 710013 words of font info for 102 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,19n,104p,1030b,2198s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,19n,104p,1029b,2198s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Lenovo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.p
 fb><C:/Users/Lenovo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.
 pfb><C:/Users/Lenovo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10
@@ -1139,10 +1128,10 @@ pfb><C:/Users/Lenovo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.
 pfb><C:/Users/Lenovo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy9.
 pfb><C:/Users/Lenovo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10
 .pfb>
-Output written on "Fabry-Perot Mode and Stability.pdf" (18 pages, 1432326 bytes
+Output written on "Fabry-Perot Mode and Stability.pdf" (18 pages, 1428355 bytes
 ).
 PDF statistics:
- 555 PDF objects out of 1000 (max. 8388607)
- 149 named destinations out of 1000 (max. 500000)
+ 548 PDF objects out of 1000 (max. 8388607)
+ 146 named destinations out of 1000 (max. 500000)
  220 words of extra memory for PDF output out of 10000 (max. 10000000)
 
